@@ -1,5 +1,4 @@
 #!/bin/sh
-#https://koz.io/using-frida-on-android-without-root/
 CWD=`pwd`
 
 APKFILE='invalid'

@@ -1,19 +1,24 @@
 #!/bin/sh
 CWD=`pwd`
+WORKDIR="$HOME/.config/frida-scripts"
+LIBDIR="$WORKDIR/frida-libs"
+echo "Creating $WORKDIR for Frida binaries"
 
-# create directory for binary content
-mkdir -p frida-libs
-cd frida-libs
+mkdir -p "$LIBDIR"
 
+cd "$WORKDIR"
+echo `pwd`
 # Get the latest version number
-TMPDIR=$(mktemp -d)
-tmpfile=$TMPDIR/tmp.json
-curl -s -X GET https://api.github.com/repos/frida/frida/tags -o $tmpfile
-LATEST_RELEASE=`cat $tmpfile |grep name | head -1 |  sed 's/\"//g' |  sed 's/\,//g'|  gawk '{split($0,array,": ")} END{print array[2]}'`
-rm $tmpfile
+VERSION_FILE="$WORKDIR/tmp.json"
+echo "Getting Frida version"
+echo curl -s -X GET https://api.github.com/repos/frida/frida/tags -o $VERSION_FILE
+curl -s -X GET https://api.github.com/repos/frida/frida/tags -o $VERSION_FILE
+LATEST_RELEASE=`cat $VERSION_FILE|grep name | head -1 |  sed 's/\"//g' |  sed 's/\,//g'|  gawk '{split($0,array,": ")} END{print array[2]}'`
+rm $VERSION_FILE
+
 
 # Store it for the deplyment script to find the correct version
-echo Updating frida to $LATEST_RELEASE
+echo "Updating frida to $LATEST_RELEASE"
 echo $LATEST_RELEASE > "LATEST_RELEASE"
 
 # This depends on your preferences and how your distro/operating system names the pip binary
@@ -21,7 +26,7 @@ echo $LATEST_RELEASE > "LATEST_RELEASE"
 sudo pip3 install frida-tools --upgrade
 sudo pip2 install frida-tools --upgrade
 
-
+cd "$LIBDIR"
 # we are inside frida-libs - clean up older versions
 rm -f frida*
 

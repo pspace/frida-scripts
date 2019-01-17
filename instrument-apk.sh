@@ -1,10 +1,10 @@
 #!/bin/sh
-#https://koz.io/using-frida-on-android-without-root/
 CWD=`pwd`
 DOCSTRING="Usage: ./instrument-apk.sh -p PROJECTDIR -k PATH/TO/KEYSTORE -a ALIAS_FOR_SIGNING_KEY -f PATH_TO_FRIDA_LIBS"
 KEYMSG="You can create a new signing key via with 'keytool -genkey -v -keystore KEYSTORE -alias KEYALIAS -keyalg RSA -keysize 2048 -validity 8192'"
 REBUILD_ONLY=0
-LIBDIR="$CWD/frida-libs"
+WORKDIR="$HOME/.config/frida-scripts"
+LIBDIR="$WORKDIR/frida-libs"
 while [ "$1" != "" ];
 do
 case $1 in
@@ -32,6 +32,8 @@ case $1 in
     -f|--frida)
     shift
     LIBDIR="$1"
+    exit
+    ;;
     *)
     echo $1
     echo "$DOCSTRING"
@@ -47,7 +49,17 @@ if [ ! -d $PROJECTDIR ]; then
     echo "$DOCSTRING"
     exit -1
 fi
-BASENAME=`basename $PROJECTDIR`
+
+
+if [ ! -d $LIBDIR ]; then
+    echo "Directory $LIBDIR for frida libs does not exist or is not a directory. Exiting."
+    echo "$DOCSTRING"
+    exit -11
+fi
+
+FULLPATH=`realpath $PROJECTDIR`
+BASENAME=`basename $FULLPATH`
+
 
 EXTRACT_DIR="$PROJECTDIR/extracted"
 
@@ -57,12 +69,12 @@ if [ ! -f "$EXTRACT_DIR/AndroidManifest.xml" ]; then
 fi
 
 
-echo "Copying gadget library"
-VERSION=`cat "$LIBDIR/LATEST_RELEASE"`
+echo "Copying gadget libraries from $LIBDIR"
+VERSION=`cat "$WORKDIR/LATEST_RELEASE"`
 GADGET_LIB=libfrida-gadget.so
 ARCH="arm64"
 DST="$EXTRACT_DIR/lib/arm64-v8a"
-FRIDA_LIB="$LIBBDIR/frida-gadget-$VERSION-android-$ARCH.so"
+FRIDA_LIB="$LIBDIR/frida-gadget-$VERSION-android-$ARCH.so"
 mkdir -p "$DST"
 cp "$FRIDA_LIB" "$DST"/$GADGET_LIB
 
