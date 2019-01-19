@@ -36,7 +36,7 @@ esac
 shift
 done
 
-VERSION=`cat $WORKDIR/frida-libs/LATEST_RELEASE`
+VERSION=`cat $WORKDIR/LATEST_RELEASE`
 
 if [[ -z "$ARCH" ]]; then
     echo "No target architecture specified not found! Exiting!"
