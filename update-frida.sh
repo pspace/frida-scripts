@@ -31,14 +31,14 @@ cd "$LIBDIR"
 rm -f frida*
 
 # download x86/x86_64/arm/arm64 server and gadget files - just add other architectures here
-curl -L -O -J https://github.com/frida/frida/releases/download/$LATEST_RELEASE/frida-gadget-$LATEST_RELEASE-android-x86_64.so.xz
-curl -L -O -J https://github.com/frida/frida/releases/download/$LATEST_RELEASE/frida-gadget-$LATEST_RELEASE-android-x86.so.xz
-curl -L -O -J https://github.com/frida/frida/releases/download/$LATEST_RELEASE/frida-gadget-$LATEST_RELEASE-android-arm64.so.xz
-curl -L -O -J https://github.com/frida/frida/releases/download/$LATEST_RELEASE/frida-gadget-$LATEST_RELEASE-android-arm.so.xz
-curl -L -O -J https://github.com/frida/frida/releases/download/$LATEST_RELEASE/frida-server-$LATEST_RELEASE-android-x86_64.xz
-curl -L -O -J https://github.com/frida/frida/releases/download/$LATEST_RELEASE/frida-server-$LATEST_RELEASE-android-x86.xz
-curl -L -O -J https://github.com/frida/frida/releases/download/$LATEST_RELEASE/frida-server-$LATEST_RELEASE-android-arm64.xz
-curl -L -O -J https://github.com/frida/frida/releases/download/$LATEST_RELEASE/frida-server-$LATEST_RELEASE-android-arm.xz
+curl -# -L -O -J https://github.com/frida/frida/releases/download/$LATEST_RELEASE/frida-gadget-$LATEST_RELEASE-android-x86_64.so.xz
+curl -# -L -O -J https://github.com/frida/frida/releases/download/$LATEST_RELEASE/frida-gadget-$LATEST_RELEASE-android-x86.so.xz
+curl -# -L -O -J https://github.com/frida/frida/releases/download/$LATEST_RELEASE/frida-gadget-$LATEST_RELEASE-android-arm64.so.xz
+curl -# -L -O -J https://github.com/frida/frida/releases/download/$LATEST_RELEASE/frida-gadget-$LATEST_RELEASE-android-arm.so.xz
+curl -# -L -O -J https://github.com/frida/frida/releases/download/$LATEST_RELEASE/frida-server-$LATEST_RELEASE-android-x86_64.xz
+curl -# -L -O -J https://github.com/frida/frida/releases/download/$LATEST_RELEASE/frida-server-$LATEST_RELEASE-android-x86.xz
+curl -# -L -O -J https://github.com/frida/frida/releases/download/$LATEST_RELEASE/frida-server-$LATEST_RELEASE-android-arm64.xz
+curl -# -L -O -J https://github.com/frida/frida/releases/download/$LATEST_RELEASE/frida-server-$LATEST_RELEASE-android-arm.xz
 
 # unpack the downloaded archives
 for f in *.xz
