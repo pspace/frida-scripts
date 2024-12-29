@@ -13,7 +13,7 @@ VERSION_FILE="$WORKDIR/tmp.json"
 echo "Getting Frida version"
 echo curl -s -X GET https://api.github.com/repos/frida/frida/tags -o $VERSION_FILE
 curl -s -X GET https://api.github.com/repos/frida/frida/tags -o $VERSION_FILE
-LATEST_RELEASE=`cat $VERSION_FILE|grep name | head -1 |  sed 's/\"//g' |  sed 's/\,//g'|  gawk '{split($0,array,": ")} END{print array[2]}'`
+LATEST_RELEASE=`cat $VERSION_FILE|grep name | head -1 |  sed 's/\"//g' |  sed 's/\,//g'|  awk '{split($0,array,": ")} END{print array[2]}'`
 rm $VERSION_FILE
 
 
